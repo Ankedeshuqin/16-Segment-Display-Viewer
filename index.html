@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<title>16 Segment Display Viewer</title>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<table><tr valign="top">
+<td>
+<textarea id="inputtxt" cols="30" rows="5"></textarea>
+<br>
+<table>
+<tr><td colspan="2"><h4>Typeface:</h4></td></tr>
+<tr><td>Character width:</td><td><input type="text" style="width:75px" id="inputcharw" value="100"><br><input type="range" id="rangecharw" min="0" max="200" step="1" value="100"></td></tr>
+<tr><td>Character height:</td><td><input type="text" style="width:75px" id="inputcharh" value="200"><br><input type="range" id="rangecharh" min="0" max="400" step="1" value="200"></td></tr>
+<tr><td>Segment width:</td><td><input type="text" style="width:75px" id="inputsegw" value="15"><br><input type="range" id="rangesegw" min="0" max="20" step="0.5" value="15"></td></tr>
+<tr><td>Segment spacing:</td><td><input type="text" style="width:75px" id="inputsegsp" value="1.5"><br><input type="range" id="rangesegsp" min="0" max="10" step="0.1" value="1.5"></td></tr>
+<tr><td>Character spacing:</td><td><input type="text" style="width:75px" id="inputcharsp" value="20"><br><input type="range" id="rangecharsp" min="0" max="100" step="1" value="20"></td></tr>
+<tr><td>Line spacing:</td><td><input type="text" style="width:75px" id="inputlnsp" value="40"><br><input type="range" id="rangelnsp" min="0" max="200" step="1" value="40"></td></tr>
+<tr><td colspan="2"><h4>Color:</h4></td></tr>
+<tr><td>Character color:</td><td><input type="text" style="width:75px" id="inputcharcol" value="#FF0000"></td></tr>
+<tr><td>background color:</td><td><input type="text" style="width:75px" id="inputbkcol" value="#000000"></td></tr>
+<tr><td>Segment off opacity:</td><td><input type="text" style="width:75px" id="inputsegoffopa" value="0.2"><br><input type="range" id="rangesegoffopa" min="0" max="1" step="0.01" value="0.2"></td></tr>
+</table>
+</td>
+<td>
+<canvas id="canvas"></canvas>
+</td>
+</tr></table>
+<script src="main.js"></script>
+</body>
+</html>
