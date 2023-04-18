@@ -24,43 +24,80 @@ canvas=document.getElementById("canvas");
 ctx=canvas.getContext("2d");
 txt="";
 
+/* Input controls */
 inputCharW=document.getElementById("inputcharw");
 inputCharH=document.getElementById("inputcharh");
 inputSegW=document.getElementById("inputsegw");
 inputSegSp=document.getElementById("inputsegsp");
 inputCharSp=document.getElementById("inputcharsp");
 inputLnSp=document.getElementById("inputlnsp");
-inputSlant=document.getElementById("inputslant");
 inputCharCol=document.getElementById("inputcharcol");
 inputBkCol=document.getElementById("inputbkcol");
 inputSegOffOpa=document.getElementById("inputsegoffopa");
 
+/* Range controls */
 rangeCharW=document.getElementById("rangecharw");
 rangeCharH=document.getElementById("rangecharh");
 rangeSegW=document.getElementById("rangesegw");
 rangeSegSp=document.getElementById("rangesegsp");
 rangeCharSp=document.getElementById("rangecharsp");
 rangeLnSp=document.getElementById("rangelnsp");
-rangeSlant=document.getElementById("rangeslant");
 rangeSegOffOpa=document.getElementById("rangesegoffopa");
 
-inputCharW.oninput=function(){rangeCharW.value=inputCharW.value; redraw();}
-inputCharH.oninput=function(){rangeCharH.value=inputCharH.value; redraw();}
-inputSegW.oninput=function(){rangeSegW.value=inputSegW.value; redraw();}
-inputSegSp.oninput=function(){rangeSegSp.value=inputSegSp.value; redraw();}
-inputCharSp.oninput=function(){rangeCharSp.value=inputCharSp.value; redraw();}
-inputLnSp.oninput=function(){rangeLnSp.value=inputLnSp.value; redraw();}
-inputCharCol.oninput=function(){redraw();}
-inputBkCol.oninput=function(){redraw();}
-inputSegOffOpa.oninput=function(){rangeSegOffOpa.value=inputSegOffOpa.value; redraw();}
+/* Input-range control pairs */
+inputRangePairs=[[inputCharW,rangeCharW],[inputCharH,rangeCharH],[inputSegW,rangeSegW],[inputSegSp,rangeSegSp],[inputCharSp,rangeCharSp],[inputLnSp,rangeLnSp],[inputSegOffOpa,rangeSegOffOpa]];
 
-rangeCharW.oninput=function(){inputCharW.value=rangeCharW.value; redraw();}
-rangeCharH.oninput=function(){inputCharH.value=rangeCharH.value; redraw();}
-rangeSegW.oninput=function(){inputSegW.value=rangeSegW.value; redraw();}
-rangeSegSp.oninput=function(){inputSegSp.value=rangeSegSp.value; redraw();}
-rangeCharSp.oninput=function(){inputCharSp.value=rangeCharSp.value; redraw();}
-rangeLnSp.oninput=function(){inputLnSp.value=rangeLnSp.value; redraw();}
-rangeSegOffOpa.oninput=function(){inputSegOffOpa.value=rangeSegOffOpa.value; redraw();}
+checkScale=document.getElementById("checkscale");
+
+scaleValuesDef=[100,200,15,1.5,20,40];
+
+for(let i=0;i<7;i++){
+    inputRangePairs[i][0].oninput=function(){
+        if(!isNaN(Number(inputRangePairs[i][0].value))){
+            inputRangePairs[i][1].value=Number(inputRangePairs[i][0].value);
+            
+            /* For scaling proportionally */
+            if(i<6){
+                if(checkScale.checked){
+                    proportion=Number(inputRangePairs[i][0].value)/scaleValuesDef[i];
+                    for(let j=0;j<6;j++){
+                        if(j!=i){
+                            inputRangePairs[j][0].value=scaleValuesDef[j]*proportion;
+                            inputRangePairs[j][1].value=scaleValuesDef[j]*proportion;
+                        }
+                    }
+                }
+            }
+            
+            redraw();
+        }
+    }
+    
+    inputRangePairs[i][1].oninput=function(){
+        inputRangePairs[i][0].value=inputRangePairs[i][1].value;
+        
+        /* For scaling proportionally */
+        if(i<6){
+            if(checkScale.checked){
+                proportion=Number(inputRangePairs[i][1].value)/scaleValuesDef[i];
+                for(let j=0;j<6;j++){
+                    if(j!=i){
+                        inputRangePairs[j][0].value=scaleValuesDef[j]*proportion;
+                        inputRangePairs[j][1].value=scaleValuesDef[j]*proportion;
+                    }
+                }
+            }
+        }
+        
+        redraw();
+    }
+}
+inputCharCol.oninput=function(){
+    redraw();
+}
+inputBkCol.oninput=function(){
+    redraw();
+}
 
 inputTxt.oninput=function(){
     txt=inputTxt.value;
